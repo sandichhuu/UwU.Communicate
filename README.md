@@ -36,3 +36,127 @@ The package is not published to NuGet yet. You can clone the repository and refe
 
 ```bash
 git clone https://github.com/sandichhuu/UwU.Communicate.git
+```
+
+## Using
+
+- ** Step1: Create a package data**
+```csharp
+using UwU.ByteSerialization;
+using UwU.ByteSerialization.Interfaces;
+using UwU.Communicate.Message;
+
+public class OnChatMessage : MessageBase<OnChatMessage>, IByteSerializable
+{
+    public string displayName = string.Empty;
+    public string message = string.Empty;
+
+    // Convert data on this class to byteArray.
+    public int Serialize(Span<byte> buffer)
+    {
+        var offset = 0;
+        offset += ByteSerializationHelper.WriteString(buffer[offset..], this.message);
+        offset += ByteSerializationHelper.WriteString(buffer[offset..], this.displayName);
+        return offset;
+    }
+
+    // Convert from byteArray into values.
+    public int Deserialize(ReadOnlySpan<byte> data)
+    {
+        var offset = 0;
+        offset += ByteSerializationHelper.ReadString(data[offset..], out this.message);
+        offset += ByteSerializationHelper.ReadString(data[offset..], out this.displayName);
+        return offset;
+    }
+
+    public override string ToString()
+    {
+        return $"{{ {this.displayName}: {this.message} }}";
+    }
+}
+```
+
+- ** Step2: Create a data listener**
+```csharp
+using UwU.Communicate.Message;
+using UwU.Communicate.Server.Connection;
+using UwU.Communicate.Server.MessageListener.Interfaces;
+using UwU.Communicate.Server.MessageListener;
+
+public class ChatMessageListener : IMessageListener<OnChatMessage>
+{
+    public void OnMessage(Instance instance, OnChatMessage message)
+    {
+        Console.WriteLine($"ReceivedMessage from {instance.uuid}");
+        Console.WriteLine($"MessageContent: {message.message}");
+    }
+}
+```
+
+- ** Step3: Sign the listener on main**
+```csharp
+using System.Text;
+using UwU.Communicate.Server;
+using UwU.Communicate.Server.MessageListener;
+using UwU.Communicate.Server.Middleware;
+
+Console.OutputEncoding = Encoding.UTF8;
+Console.InputEncoding = Encoding.UTF8;
+
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+var serviceListener = new ServiceListener();
+
+// Sign your listener to start
+var chatMessageListener = new ChatMessageListener();
+serviceListener.RegisterListener(chatMessageListener);
+
+app.UseWebSockets();
+app.UseMiddleware<WebSocketMiddleware>();
+
+app.Run();
+```
+
+- ** Example SendData**
+```csharp
+using UwU.Communicate.Message;
+using UwU.Communicate.Server.Connection;
+using UwU.Communicate.Server.Services;
+
+namespace UwU.Communicate.Server.Middleware;
+
+public class WebSocketMiddleware(RequestDelegate next)
+{
+    private readonly WebSocketHandler handler = new();
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        if (context.Request.Path == "/game" && context.WebSockets.IsWebSocketRequest)
+        {
+            using (var socket = await context.WebSockets.AcceptWebSocketAsync())
+            {
+                var instance = InstanceManager.Create(socket);
+                await SendConnectionSuccess(instance);
+                await this.handler.HandleAsync(instance);
+                InstanceManager.Remove(instance.uuid);
+            }
+        }
+        else
+        {
+            await next(context);
+        }
+    }
+
+    // Function to send data package
+    private static async Task SendConnectionSuccess(Instance instance)
+    {
+        var connectedMessage = new OnConnected
+        {
+            connectionId = instance.uuid.ToString(),
+            message = "Đã kết nối thành công"
+        };
+
+        await instance.Send(connectedMessage);
+    }
+}
+```
