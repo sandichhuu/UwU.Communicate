@@ -160,3 +160,36 @@ public class WebSocketMiddleware(RequestDelegate next)
     }
 }
 ```
+
+## 🔧 Configuration
+Open GlobalConfig.cs on project UwU.Communicate.Config.
+```csharp
+namespace UwU.Communicate.Config
+{
+    public static class GlobalConfig
+    {
+        public const bool TRACE_COMMUNICATE_DEBUG = true;
+        public const int BUFFER_SIZE = 1024 * 4;
+        public const int USE_COMPRESSSION = 1;
+    }
+}
+```
+1. TRACE_COMMUNICATE_DEBUG: Allow you known the message is send/received or not, the size of byte send/received, ...
+
+2. BUFFER_SIZE: Size of byte array, that is holding the data before send. 
+Smaller mean smaller memory usage.
+Becareful, If the buffer not enough space, the program will crashed.
+
+4. USE_COMPRESSSION
+  - 0: No compress.
+  - 1: Compress with snapier.
+  - 2: Compress with LZMA. (updating, please wait for next version)
+
+## 🔧 More infomation
+  🔄 When Snappier Compression Is Enabled:
+  ✅ Smaller data size over the wire → Less network usage, lower latency on slower connections.
+  ❗️ Higher CPU usage → CPU has to compress (on send) and decompress (on receive).
+
+  🔄 When Snappier Compression Is Disabled:
+  ✅ Lower CPU workload → Good for lightweight devices or when CPU is under heavy load.
+  ❗️ Larger payload size → More network usage, which could increase latency or cost in some scenarios.
