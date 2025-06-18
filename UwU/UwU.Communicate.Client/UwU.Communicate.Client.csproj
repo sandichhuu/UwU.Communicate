@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Snappier" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UwU.ByteSerializer\UwU.ByteSerialization.csproj" />
+    <ProjectReference Include="..\UwU.Communicate.Config\UwU.Communicate.Config.csproj" />
+    <ProjectReference Include="..\UwU.MessagePackage\UwU.Communicate.Message.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UwU.ByteSerializer\UwU.ByteSerialization.csproj" />
+    <ProjectReference Include="..\UwU.Communicate.Config\UwU.Communicate.Config.csproj" />
+  </ItemGroup>
+
+</Project>

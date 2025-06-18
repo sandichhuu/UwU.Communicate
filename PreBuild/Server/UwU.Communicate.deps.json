@@ -1,0 +1,56 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "UwU.Communicate/1.0.0": {
+        "dependencies": {
+          "UwU.ByteSerialization": "1.0.0",
+          "UwU.Communicate.Message": "1.0.0"
+        },
+        "runtime": {
+          "UwU.Communicate.dll": {}
+        }
+      },
+      "UwU.ByteSerialization/1.0.0": {
+        "runtime": {
+          "UwU.ByteSerialization.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "UwU.Communicate.Message/1.0.0": {
+        "dependencies": {
+          "UwU.ByteSerialization": "1.0.0"
+        },
+        "runtime": {
+          "UwU.Communicate.Message.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "UwU.Communicate/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "UwU.ByteSerialization/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "UwU.Communicate.Message/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
