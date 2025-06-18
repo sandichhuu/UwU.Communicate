@@ -1,8 +1,4 @@
-﻿using System.Net.WebSockets;
-using UwU.ByteSerialization;
-using UwU.Communicate.Config;
-using UwU.Communicate.Message;
-using UwU.Communicate.Message.TypeRegistry;
+﻿using UwU.Communicate.Message;
 using UwU.Communicate.Server.Connection;
 using UwU.Communicate.Server.Services;
 
@@ -37,7 +33,7 @@ public class WebSocketMiddleware(RequestDelegate next)
             connectionId = instance.uuid.ToString(),
             message = "Đã kết nối thành công"
         };
-        
+
         await instance.Send(connectedMessage);
     }
 }

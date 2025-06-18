@@ -47,17 +47,17 @@ namespace UwU.Communicate.Server
 
         public void OnReceived(Instance instance, byte[] buffer)
         {
-            if (GlobalConfig.TRACE_COMMUNICATE_DEBUG)
-            {
-                Console.WriteLine($"Received: {buffer.Length} bytes");
-            }
-
             ReadOnlySpan<byte> dataBuffer;
             ReadOnlySpan<byte> payloadBuffer = buffer;
 
             var offset = 0;
             offset += ByteSerializationHelper.ReadInt32(payloadBuffer[offset..], out var isCompressed);
             offset += ByteSerializationHelper.ReadInt32(payloadBuffer[offset..], out var objectTypeId);
+
+            if (GlobalConfig.TRACE_COMMUNICATE_DEBUG)
+            {
+                Console.WriteLine($"Received: {payloadBuffer[offset..].Length} bytes");
+            }
 
             if (isCompressed == 0)
             {

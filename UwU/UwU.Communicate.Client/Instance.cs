@@ -1,7 +1,6 @@
 ﻿using Snappier;
 using System.Buffers;
 using System.Net.WebSockets;
-using System.Text;
 using UwU.ByteSerialization;
 using UwU.ByteSerialization.Interfaces;
 using UwU.Communicate.Client.MessageListener.Adapter;
@@ -140,20 +139,19 @@ namespace UwU.Communicate.Client
 
         private void OnReceiveMessage(ReadOnlySpan<byte> payloadBuffer)
         {
-            if (GlobalConfig.TRACE_COMMUNICATE_DEBUG)
-            {
-                Console.WriteLine($"Received: {payloadBuffer.Length} bytes");
-            }
-
             ReadOnlySpan<byte> dataBuffer;
 
             var offset = 0;
             offset += ByteSerializationHelper.ReadInt32(payloadBuffer[offset..], out var isCompressed);
             offset += ByteSerializationHelper.ReadInt32(payloadBuffer[offset..], out var objectTypeId);
 
+            if (GlobalConfig.TRACE_COMMUNICATE_DEBUG)
+            {
+                Console.WriteLine($"Received: {payloadBuffer[offset..].Length} bytes");
+            }
+
             if (isCompressed == 0)
             {
-                //offset += ByteSerializationHelper.ReadByteArray(payloadBuffer[offset..], out var data);
                 dataBuffer = payloadBuffer[offset..];
             }
             else if (isCompressed == 1)

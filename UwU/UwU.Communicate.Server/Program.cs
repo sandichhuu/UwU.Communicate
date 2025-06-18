@@ -9,8 +9,9 @@ Console.InputEncoding = Encoding.UTF8;
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 var serviceListener = new ServiceListener();
-var chatMessageListener = new ChatMessageListener();
 
+// Sign your listener to start
+var chatMessageListener = new ChatMessageListener();
 serviceListener.RegisterListener(chatMessageListener);
 
 app.UseWebSockets();

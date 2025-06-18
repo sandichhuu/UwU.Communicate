@@ -17,7 +17,7 @@ class Program
         instance.RegisterListener(connectListener);
         instance.RegisterListener(chatMessageListener);
 
-        await instance.Connect("ws://localhost:5245/game");
+        await instance.Connect("ws://localhost:5000/game");
         StartListen(instance);
 
         while (instance.IsConnectionAlive())
