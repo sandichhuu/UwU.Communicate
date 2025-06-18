@@ -40,7 +40,7 @@ git clone https://github.com/sandichhuu/UwU.Communicate.git
 
 ## 🔧 How to use
 
-- ** Step1: Create a package data**
+- **Step1: Create a package data**
 ```csharp
 using UwU.ByteSerialization;
 using UwU.ByteSerialization.Interfaces;
@@ -76,7 +76,7 @@ public class OnChatMessage : MessageBase<OnChatMessage>, IByteSerializable
 }
 ```
 
-- ** Step2: Create a data listener**
+- **Step2: Create a data listener**
 ```csharp
 using UwU.Communicate.Message;
 using UwU.Communicate.Server.Connection;
@@ -93,7 +93,7 @@ public class ChatMessageListener : IMessageListener<OnChatMessage>
 }
 ```
 
-- ** Step3: Sign the listener on main**
+- **Step3: Sign the listener on main**
 ```csharp
 using System.Text;
 using UwU.Communicate.Server;
@@ -117,7 +117,7 @@ app.UseMiddleware<WebSocketMiddleware>();
 app.Run();
 ```
 
-- ** Example SendData**
+- **Example SendData**
 ```csharp
 using UwU.Communicate.Message;
 using UwU.Communicate.Server.Connection;
