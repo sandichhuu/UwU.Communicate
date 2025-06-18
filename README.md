@@ -174,13 +174,15 @@ namespace UwU.Communicate.Config
     }
 }
 ```
-1. TRACE_COMMUNICATE_DEBUG: Allow you known the message is send/received or not, the size of byte send/received, ...
-
-2. BUFFER_SIZE: Size of byte array, that is holding the data before send. 
-Smaller mean smaller memory usage.
-Becareful, If the buffer not enough space, the program will crashed.
-
-4. USE_COMPRESSSION
+- **1. TRACE_COMMUNICATE_DEBUG**
+    Allow you known the message is send/received or not, the size of byte send/received, ...
+   
+- **2. BUFFER_SIZE**
+    Size of byte array, that is holding the data before send. 
+    Smaller mean smaller memory usage.
+    Becareful, If the buffer not enough space, the program will crashed.
+  
+- **2. USE_COMPRESSSION**
   - 0: No compress.
   - 1: Compress with snapier.
   - 2: Compress with LZMA. (updating, please wait for next version)
